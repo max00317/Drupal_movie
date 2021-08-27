@@ -1,0 +1,33 @@
+{
+  "name": "orange_ecom_starter",
+  "version": "2.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp"
+  },
+  "author": "Acro Media Inc.",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14",
+    "aos": "^2.3",
+    "bootstrap-sass": "^3.4.1",
+    "bootstrap-tabcollapse": "^0.2",
+    "js-cookie": "^2.2",
+    "slick-carousel": "^1.8"
+  },
+  "devDependencies": {
+    "gulp": "^4.0",
+    "gulp-autoprefixer": "^7.0",
+    "gulp-postcss": "^8.0",
+    "gulp-rename": "^2.0",
+    "gulp-sass": "^4.0",
+    "gulp-sourcemaps": "^2.6",
+    "gulp-watch": "^5.0"
+  },
+  "browserslist": [
+    "> 5%",
+    "safari 8"
+  ]
+}

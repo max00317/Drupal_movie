@@ -1,0 +1,6 @@
+name: Parid Module
+type: module
+desription: Say Hello world to parid
+package: Custom
+core_version_requirement: ^8 || ^9
+core: 8.x

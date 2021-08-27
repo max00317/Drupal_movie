@@ -1,0 +1,138 @@
+global-styling:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: { media: all }
+  js:
+    js/custom/script.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - magnific_popup/magnific_popup
+    - orange_ecom_starter/bootstrap
+    - orange_ecom_starter/form-floating-labels
+
+search-toggle:
+  version: 1.x
+  js:
+    js/custom/search-toggle.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - orange_ecom_starter/js-cookie
+
+form-floating-labels:
+  version: 1.x
+  js:
+    js/custom/form-floating-labels.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+
+block-modal:
+  version: 1.x
+  js:
+    js/custom/blocks/modal.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/js-cookie
+
+paragraph-carousel:
+  version: 1.x
+  js:
+    js/custom/paragraphs/carousel.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
+paragraph-content-carousel:
+  version: 1.x
+  js:
+    js/custom/paragraphs/content-carousel.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
+paragraph-logo-carousel:
+  version: 1.x
+  js:
+    js/custom/paragraphs/logo-carousel.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
+paragraph-featured-products:
+  version: 1.x
+  js:
+    js/custom/paragraphs/featured-products.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
+commerce-product:
+  version: 1.x
+  js:
+    js/custom/commerce-product.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - orange_ecom_starter/slick
+
+paragraph-notice-strap:
+  version: 1.x
+  js:
+    js/custom/paragraphs/notice-strap.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/js-cookie
+
+# Libraries from contributed code.
+js-cookie:
+  version: 2.2
+  js:
+    node_modules/js-cookie/src/js.cookie.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+
+slick:
+  version: 1.8
+  css:
+    theme:
+      node_modules/slick-carousel/slick/slick.css: { media: all }
+  js:
+    node_modules/slick-carousel/slick/slick.min.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+aos:
+  version: 2.3
+  css:
+    theme:
+      node_modules/aos/dist/aos.css: { media: all }
+  js:
+    node_modules/aos/dist/aos.js: {}
+    js/custom/aos.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+bootstrap:
+  version: 4.5
+  # CSS provided by bootstrap is part of the compiled 'style.css'.
+  js:
+    node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js: { weight: 0 }
+    node_modules/bootstrap-tabcollapse/bootstrap-tabcollapse.js: { weight: 0 }
+  dependencies:
+    - core/jquery

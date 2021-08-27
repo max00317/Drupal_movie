@@ -1,0 +1,7 @@
+welcome.page:
+path: "welcome page"
+defaults:
+_controller: '\Drupal\welcome\Controller\WelcomeController::Welcome'
+_title: "Welcome my module"
+requirements:
+_premission: "access content"

@@ -1,0 +1,88 @@
+{#
+/**
+ * @file
+ *
+ * Product Listing template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - product: The rendered product fields.
+ *   Use 'product' to print them all, or print a subset such as
+ *   'product.title'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ product|without('title') }}
+ *   @endcode
+ * - product_entity: The product entity.
+ * - product_url: The product URL.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% extends "commerce-product.html.twig" %}
+
+{% block content %}
+  <div class="product-listing-item">
+    <a href="{{ product_path }}" class="product-thumbnail {{ product_entity.field_image_hover.entity.fileuri ? 'product-thumbnail--with-hover' }}">
+      <div class="product-thumbnail__content">
+        {% if product_variation_images %}
+          {% for product_variation_image in product_variation_images %}
+            {# Use first image of the first variation. #}
+            {% if loop.first %}
+              <img src="{{ product_variation_image.images.0.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.images.0.alt }}" class="product-thumbnail__image" />
+
+              {% if product_entity.field_image_hover.entity.fileuri %}
+                <div class="product-thumbnail__image-hover">
+                  <img src="{{ product_entity.field_image_hover.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_entity.field_image_hover.alt }}" />
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <img src="{{ product_thumbnail_url }}" alt="{{ product_thumbnail_alt }}" />
+        {% endif %}
+      </div>
+    </a>
+    <div class="product-listing-item__content">
+      <h2 class="product__title">
+        <a href="{{ product_path }}" tabindex="-1">{{ product.title }}</a>
+      </h2>
+      {% if has_multiple_variations %}
+        <div class="product__variations-notice">
+          <div class="product__more-options-label">
+            <a href="{{ product_path }}" tabindex="-1">
+              {{ 'More Options'|t }}
+            </a>
+          </div>
+        </div>
+      {% endif %}
+      <div class="product__price">
+        {{ product.variation_price }}
+      </div>
+      {% if product.variation_list_price %}
+        <div class="product__list-price">
+          {{ product.variation_list_price }}
+        </div>
+      {% endif %}
+      <div class="product__details">
+        <div class="product__sku">
+          {{ product.variation_sku }}
+        </div>
+        {% if reviews_are_active and average_star_rating|length %}
+          <div class="product__average-rating">
+            {{ 'Average Rating'|t }}: {{ average_star_rating_stars }}
+          </div>
+        {% endif %}
+      </div>
+      {% if product_summary %}
+        <div class="product__summary">
+          {{ product.field_text_long }}
+        </div>
+      {% endif %}
+      <div class="product__view-details">
+        <a href="{{ product_path }}" tabindex="-1">{{ 'View Details >'|t }}</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

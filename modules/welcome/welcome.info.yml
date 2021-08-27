@@ -1,0 +1,6 @@
+name: Drupal19 Moduel
+type: Module
+description: 'this is trying module drupal costumk'
+package: Welcome
+core_version_requirement: ^8 || ^9
+core: 8.x

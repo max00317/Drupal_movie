@@ -1,0 +1,51 @@
+name: Orange E-Commerce Starter
+type: theme
+description: A base to kick start your theming.
+package: Orange
+core_version_requirement: ^8.9 || ^9
+base theme: classy
+
+dependencies:
+  - drupal:twig_tweak
+
+libraries:
+  - orange_ecom_starter/global-styling
+
+libraries-override:
+  classy/base:
+    css:
+      component:
+        css/components/menu.css: false
+  orange_framework/bootstrap: orange_ecom_starter/bootstrap
+  # Remove commerce styles since we use our own.
+  commerce_checkout/login_pane: false
+  commerce_checkout/form: false
+
+ckeditor_stylesheets:
+  - css/style.css
+
+regions:
+  above_site: 'Above Site'
+  site_search: 'Site Search'
+  header: 'Header'
+  highlighted: 'Highlighted'
+  above_content: 'Above Content'
+  content: 'Content'
+  below_content: 'Below Content'
+  left_sidebar: 'Left Sidebar'
+  right_sidebar: 'Right Sidebar'
+  store_filters: 'Store Filters'
+  store_facets: 'Store Facets'
+  footer: 'Footer'
+  # Navigation.
+  mobile_nav: 'Mobile Navigation'
+  user_nav: 'User Navigation'
+  header_nav: 'Header Navigation'
+  primary_nav: 'Primary Navigation'
+  footer_nav: 'Footer Navigation'
+  social_nav: 'Social Media Navigation'
+
+# Information added by Drupal.org packaging script on 2021-01-07
+version: '2.0.x-dev'
+project: 'orange_ecom_starter'
+datestamp: 1610033689

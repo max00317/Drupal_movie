@@ -1,0 +1,310 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a single Drupal page.
+ *
+ * The doctype, html, head, and body tags are not in this template. Instead
+ * they can be found in the html.html.twig template normally located in the
+ * core/modules/system directory.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ * - logo: The url of the logo image, as defined in theme settings.
+ * - site_name: The name of the site. This is empty when displaying the site
+ *   name has been disabled in the theme settings.
+ * - site_slogan: The slogan of the site. This is empty when displaying the site
+ *   slogan has been disabled in theme settings.
+ *
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * @see template_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+{% block page_header %}
+  {% if page.above_site %}
+    <div class="above-site">
+      {{ page.above_site }}
+    </div>
+  {% endif %}
+
+  {# Search Toggle. #}
+  {{ attach_library('orange_ecom_starter/search-toggle') }}
+  {# Dropdown used for toggling the active search. #}
+  {% set search_toggle %}
+    <ul class="menu js-search-toggle">
+      <li class="menu__item">
+        {# The default/active search. #}
+        <a href="#">{{ 'Products'|t }}</a>
+        <ul class="menu">
+          {# Modify order of items based on the order of blocks in region: site_search. #}
+          <li class="menu__item active">
+            <a href="#">{{ 'Products'|t }}</a>
+          </li>
+          <li class="menu__item">
+            <a href="#">{{ 'Articles'|t }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  {% endset %}
+  {# / Search Toggle. #}
+
+  {# Mobile overlays. #}
+  {% if page.mobile_nav %}
+    {% if page.site_search %}
+      <div class="mobile-search-overlay mobile-overlay">
+        <div class="mobile-search-overlay__content mobile-overlay__content">
+          <a href="#" class="mobile-search-overlay__close mobile-overlay__close" aria-label="{{ 'Close'|t }}">
+            <span class="fas fa-times" aria-hidden="true"></span>
+          </a>
+
+          <div class="mobile-search-form">
+            {{ search_toggle }}
+            <div class="mobile-search-form__forms js-search-toggle-forms">
+              {# Add blocks to region in the same order as items in search_toggle. #}
+              {{ page.site_search }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="mobile-nav-overlay mobile-overlay">
+      <div class="mobile-nav-overlay__content mobile-overlay__content clearfix">
+        <header class="mobile-nav-overlay__header clearfix" role="banner">
+          <a href="#" class="mobile-nav-overlay__close mobile-overlay__close" aria-label="{{ 'Close'|t }}">
+            <span class="fas fa-times" aria-hidden="true"></span>
+          </a>
+        </header>
+
+        <div class="mobile-nav">
+          {{ page.mobile_nav }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {# / Mobile overlays. #}
+
+  <header class="site-header">
+    <div class="site-header__top container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if page.header_nav %}
+            <div class="site-header-nav">
+              <div class="region hidden-xs">
+                {{ page.header_nav }}
+              </div>
+
+              {% if page.user_nav %}
+                {{ page.user_nav }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <div class="site-header__logo">
+            <a href="{{ front_page }}">
+              <img src="{{ base_path ~ directory }}/logo.svg" alt="{{ site_name ? site_name }}" />
+            </a>
+          </div>
+
+          {# Mobile navigation controls. #}
+          {% if page.mobile_nav %}
+            <div class="mobile-control-nav visible-xs-block">
+              <ul class="menu clearfix">
+                <li class="menu__item menu__item--search">
+                  <a href="#" class="menu__link" title="{{ 'Search'|t }}">
+                    <span aria-hidden="true" class="fas fa-search"></span>
+                  </a>
+                </li>
+                <li class="menu__item menu__item--menu">
+                  <a href="#" class="menu__link" title="{{ 'Menu'|t }}">
+                    <span aria-hidden="true" class="fas fa-bars"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+          {# / Mobile navigation controls. #}
+
+          {% if page.site_search %}
+            <div class="site-header__search hidden-xs">
+              {{ search_toggle }}
+              <div class="site-header__search-forms js-search-toggle-forms">
+                {# Add blocks to region in the same order as items in search_toggle. #}
+                {{ page.site_search }}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="site-header__bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            {# Primary navigation. #}
+            {% if page.primary_nav %}
+              <div class="primary-nav hidden-xs">
+                {{ page.primary_nav }}
+              </div>
+            {% endif %}
+            {# / Primary navigation. #}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block page_body %}
+  {#
+    Render sidebars to check if it is truly empty.
+    Issue: https://www.drupal.org/node/953034.
+  #}
+  {% set left_sidebar_rendered = page.left_sidebar|render %}
+  {% set left_sidebar_exists = left_sidebar_rendered|striptags('<a><img>')|trim ? true : false %}
+
+  {% set right_sidebar_rendered = page.right_sidebar|render %}
+  {% set right_sidebar_exists = right_sidebar_rendered|striptags('<a><img>')|trim ? true : false %}
+
+  {# Set column class based on sidebars. #}
+  {% if left_sidebar_exists and right_sidebar_exists %}
+    {% set col_class = 'col-sm-6' %}
+    {% set sidebar_col_class = 'col-sm-3 hidden-xs' %}
+  {% elseif left_sidebar_exists or right_sidebar_exists %}
+    {% set col_class = 'col-sm-8 col-md-9' %}
+    {% set sidebar_col_class = 'col-sm-4 col-md-3 hidden-xs' %}
+  {% else %}
+    {% set col_class = 'col-sm-12' %}
+  {% endif %}
+
+  <div class="site-content">
+    <div class="container">
+      {% if page.header %}
+        <div class="site-content__header">
+          {{ page.header }}
+        </div>
+      {% endif %}
+      <div class="row">
+        {# Left Sidebar. #}
+        {% if left_sidebar_exists %}
+          <div class="{{ sidebar_col_class }}">
+            <aside class="site-sidebar site-sidebar--left" role="complementary">
+              {{ page.left_sidebar }}
+            </aside>
+          </div>
+        {% endif %}
+        {# / Left Sidebar. #}
+
+        {# Main content. #}
+        <div class="{{ col_class }}">
+          <main class="content__main-content clearfix" role="main">
+            <div class="visually-hidden"><a id="main-content" tabindex="-1"></a></div>
+            {% if page.highlighted %}
+              {{ page.highlighted }}
+            {% endif %}
+            {% if page.above_content %}
+              {{ page.above_content }}
+            {% endif %}
+            {% if page.content %}
+              {{ page.content }}
+            {% endif %}
+            {% if page.below_content %}
+              {{ page.below_content }}
+            {% endif %}
+          </main>
+        </div>
+        {# / Main content. #}
+
+        {# Right Sidebar. #}
+        {% if right_sidebar_exists %}
+          <div class="{{ sidebar_col_class }}">
+            <aside class="site-sidebar site-sidebar--right" role="complementary">
+              {{ page.right_sidebar }}
+            </aside>
+          </div>
+        {% endif %}
+        {# / Right Sidebar. #}
+      </div>
+    </div>
+  </div>
+{% endblock page_body %}
+
+{% block page_footer %}
+  <a href="#" class="b-page-scroll-to-top" title="{{ 'Scroll To Top'|t }}" aria-label="{{ 'Scroll To Top'|t }}" role="button" tabIndex="-1"></a>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {# Social Media Links. #}
+          {# Set from theme settings. #}
+          {% if facebook_url or twitter_url or instagram_url or youtube_url or linkedin_url or pinterest_url %}
+            <div class="social-media-nav">
+              <nav role="navigation" class="block block-menu navigation menu--social-media">
+                <ul class="menu menu--social-media">
+                  {% if facebook_url %}
+                    <li class="menu__item menu__item--facebook">
+                      <a href="{{ facebook_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Facebook'|t }}">{{ 'Facebook'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if twitter_url %}
+                    <li class="menu__item menu__item--twitter">
+                      <a href="{{ twitter_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Twitter'|t }}">{{ 'Twitter'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if instagram_url %}
+                    <li class="menu__item menu__item--instagram">
+                      <a href="{{ instagram_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Instagram'|t }}">{{ 'Instagram'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if youtube_url %}
+                    <li class="menu__item menu__item--youtube">
+                      <a href="{{ youtube_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on YouTube'|t }}">{{ 'YouTube'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if linkedin_url %}
+                    <li class="menu__item menu__item--linkedin">
+                      <a href="{{ linkedin_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on LinkedIn'|t }}">{{ 'LinkedIn'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if pinterest_url %}
+                    <li class="menu__item menu__item--pinterest">
+                      <a href="{{ pinterest_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Pinterest'|t }}">{{ 'Pinterest'|t }}</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          {% endif %}
+
+          {% if page.footer_nav %}
+            <div class="footer-nav">
+              {{ page.footer_nav }}
+            </div>
+          {% endif %}
+
+          <div class="site-footer__copyright">
+            {{ 'Copyright &copy; @year <a href="@frontpage_url">@site_name</a>.  All rights reserved.'| t({'@site_name': copyright_name ? copyright_name : site_name, '@frontpage_url': front_page, '@year': 'now'|date('Y') }) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+{% endblock page_footer %}

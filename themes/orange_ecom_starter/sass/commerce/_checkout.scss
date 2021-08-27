@@ -1,0 +1,496 @@
+//
+// Commerce Checkout.
+//
+
+// Section Titles.
+.commerce-checkout-flow fieldset legend,
+.commerce-checkout__section-title,
+.field--name-shipping-method fieldset legend {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  color: $c-body;
+  font-weight: normal;
+  text-transform: capitalize;
+  background: none;
+  border: 0;
+}
+
+.commerce-checkout-flow {
+  fieldset {
+    display: block;
+    margin: 20px 0 30px;
+    padding: 0 0 30px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+
+    // Nested fieldsets.
+    fieldset {
+      margin: 20px 0 30px;
+      padding: 0;
+      border: 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+      legend {
+        font-size: 20px;
+      }
+    }
+
+    // Payment Information.
+    &.checkout-pane-payment-information {
+      margin: 20px 0 40px;
+      padding: 25px 15px;
+      border: 2px solid $gray-lighter;
+
+      @media (min-width: $screen-xs-min) {
+        padding: 25px 30px;
+      }
+      > legend {
+        float: left;
+        display: block;
+        margin: 0 0 20px;
+        padding: 0;
+      }
+      > .fieldset-wrapper {
+        clear: both;
+      }
+      // Sub fieldset legends.
+      .fieldset-wrapper fieldset legend {
+        font-size: 20px;
+      }
+    }
+
+    &#edit-login-returning-customer,
+    &#edit-login-guest {
+      border: 0;
+
+      legend {
+        margin: 0 0 20px;
+      }
+      // Add some right margin to space out text beside button.
+      #edit-login-returning-customer-submit {
+        margin-right: 15px;
+      }
+    }
+    // Shipping Information.
+    &.checkout-pane-shipping-information {
+      margin-bottom: 0;
+      padding-bottom: 20px;
+      border-bottom: 0;
+
+      .btn {
+        margin-left: 0;
+      }
+      .btn[id*='recalculate-shipping'] {
+        margin-top: 20px;
+      }
+    }
+  }
+  // Phone number field.
+  .field--name-field-phone {
+    position: relative;
+    display: block;
+    margin-right: 0;
+    padding-bottom: 0;
+    width: auto;
+    vertical-align: top;
+
+    @media (min-width: $screen-sm-ph) {
+      display: inline-block;
+      margin-right: 1em;
+      width: 140px;
+    }
+    input {
+      width: 140px;
+    }
+    .description {
+      white-space: normal;
+
+      @media (min-width: $screen-sm-ph) {
+        white-space: nowrap;
+      }
+    }
+  }
+  // Phone number extension field.
+  .field--name-field-phone-ext {
+    display: block;
+    width: 108px;
+    vertical-align: top;
+
+    @media (min-width: $screen-sm-ph) {
+      display: inline-block;
+    }
+  }
+  // Credit card number.
+  .form-item-payment-information-add-payment-method-payment-details-number {
+    position: relative;
+    padding-left: 52px;
+    width: 217px;
+
+    // Lock icon.
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-lock);
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 12px 0 0;
+      width: 44px;
+      height: 100%;
+      font-size: 26px;
+      text-align: center;
+      color: $c-white;
+      background: $gray-light;
+      border-radius: $border-radius;
+    }
+  }
+  // Credit card security code.
+  .form-item-payment-information-add-payment-method-payment-details-security-code {
+    display: inline-block;
+    // Set top & bottom margins the same as .form-item.
+    margin: 1em 0;
+    padding: 0;
+    width: 80px;
+    vertical-align: top;
+  }
+  .credit-card-form__expiration .form-item {
+    margin-right: 1em;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  // Credit card divider.
+  // Remove if you want that silly slash visible.
+  .form-item-payment-information-add-payment-method-payment-details-expiration-divider {
+    display: none;
+  }
+  .credit-card-form__divider {
+    margin: 0;
+    padding: 0;
+    width: 15px;
+    font-size: 0;
+  }
+  // Credit card expiration.
+  .credit-card-form__expiration {
+    display: inline-block;
+    // Set top & bottom margins the same as .form-item.
+    margin: 1em 20px 1em 0;
+    padding: 0;
+    vertical-align: top;
+  }
+  // Coupon pane.
+  .checkout-pane.checkout-pane-coupon-redemption {
+    margin: 20px 0 30px;
+    padding: 0 0 30px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+  }
+  // Payment Information - Add Payment Method.
+  div[id*='payment-information-add-payment-method-billing-information'] {
+    .btn {
+      margin-left: 0;
+    }
+  }
+}
+.layout-region-checkout-footer {
+  .form-actions {
+    .btn {
+      margin-right: 15px;
+    }
+    a {
+      display: inline-block;
+      padding-top: 9px;
+      vertical-align: top;
+    }
+  }
+}
+.layout-region-checkout-secondary {
+  margin-bottom: 40px;
+}
+
+//
+// Checkout Form.
+// Replacements for: commerce/modules/checkout/css
+//
+
+.layout-region-checkout-main,
+.layout-region-checkout-footer {
+  float: none;
+  width: auto;
+  padding-right: 0;
+
+  @media (min-width: $screen-sm-min) {
+    float: left;
+    width: 65%;
+    padding-right: 50px;
+  }
+}
+.layout-region-checkout-secondary {
+  float: none;
+  width: auto;
+
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    width: 35%;
+  }
+}
+.toolbar-vertical.toolbar-tray-open .layout-region-checkout-main,
+.toolbar-vertical.toolbar-tray-open .layout-region-checkout-footer,
+.toolbar-vertical.toolbar-tray-open .layout-region-checkout-secondary {
+  float: none;
+  width: auto;
+  padding-right: 0;
+}
+
+
+//
+// Checkout Layout.
+// Replacements for: commerce/modules/checkout/css/commerce_checkout.layout.css
+//
+
+.form-wrapper__login-option {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.form-wrapper__login-option input:not([type="submit"]):not([type="password"]),
+.form-wrapper__returning-customer input[type="password"] {
+  width: 100%;
+}
+.form-wrapper__login-option input.button {
+  margin: 0;
+}
+.form-wrapper__returning-customer .form-item:first-of-type {
+  margin-top: 0;
+}
+#edit-login {
+
+  @media (min-width: $screen-sm-min) {
+    overflow: auto;
+  }
+}
+.form-wrapper__returning-customer {
+  float: none;
+  width: auto;
+
+  @media (min-width: $screen-md-min) {
+    float: right;
+    width: 48%;
+  }
+}
+.form-wrapper__guest-checkout {
+  float: none;
+  width: auto;
+
+  @media (min-width: $screen-md-min) {
+    float: left;
+    width: 48%;
+  }
+}
+
+// Checkout Progress / Breadcrumbs.
+.checkout-progress {
+  clear: both;
+  display: block;
+  margin: 20px 0 15px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.checkout-progress--step {
+  position: relative;
+  display: block;
+  margin: 0 22px 5px 0;
+  padding: 0 0 6px 15px;
+  vertical-align: top;
+  font-size: 16px;
+  line-height: 1;
+  color: $c-body;
+
+  @media (min-width: $screen-xs-min) {
+    display: inline-block;
+    padding: 0 0 6px;
+  }
+  // Hide numbers.
+  &::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @media (min-width: $screen-xs-min) {
+      display: none;
+    }
+  }
+  // Arrow icon.
+  &::after {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-chevron-right);
+    position: absolute;
+    top: 3px;
+    right: -19px;
+    display: none;
+    font-size: 12px;
+    color: $c-body;
+
+    @media (min-width: $screen-xs-min) {
+      display: block;
+    }
+  }
+  // Last item.
+  &:last-child {
+    margin-right: 0;
+    padding-right: 0;
+
+    // Arrow icon.
+    &::after {
+      display: none;
+    }
+  }
+}
+.checkout-progress--step__current {
+  color: $c-body;
+  font-weight: bold;
+  border-bottom: 0;
+
+  @media (min-width: $screen-xs-min) {
+    color: $c-body;
+    border-bottom: 1px solid $c-link;
+  }
+  &::before {
+    color: $c-body;
+  }
+}
+
+// Order Summary.
+.checkout-order-summary {
+  margin: 0 0 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+.checkout-order-summary__items {
+  margin: 0 0 20px;
+  padding: 0;
+}
+.checkout-order-summary__item {
+  display: flex;
+  margin: 0 0 20px;
+  padding: 0 0 20px;
+  border-bottom: 1px solid #ccc;
+}
+.checkout-order-summary__item-quantity {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  display: block;
+  margin: 0;
+  padding: 6px 5px;
+  font-size: 12px;
+  color: #fff;
+  background: #666;
+  line-height: 1;
+  text-align: center;
+  border-radius: 12px;
+  z-index: 1;
+}
+.checkout-order-summary__item-product {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 70%;
+}
+.checkout-order-summary__item-price-total {
+  width: 30%;
+  text-align: right;
+  font-weight: bold;
+}
+.order-total-line {
+  margin: 0;
+  padding: 0;
+}
+.order-total-line-value {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+}
+.order-total-line__edit-cart {
+  padding-top: 20px;
+  font-size: 14px;
+  font-style: italic;
+}
+.view-commerce-cart-form .order-total-line__edit-cart {
+  display: none;
+}
+
+// Coupon Code.
+div[id*="edit-coupon-redemption-form"] {
+  margin-top: 1em;
+
+  .form-item-sidebar-coupon-redemption-form-code,
+  .form-item-coupon-redemption-form-code {
+    display: inline-block;
+    margin-top: 0;
+
+    input {
+      max-width: 200px;
+      width: 100%;
+    }
+  }
+}
+
+// Helper Text.
+.commerce-checkout__helper-text {
+  color: $gray-light;
+  font-style: italic;
+}
+
+// Checkout Review.
+.checkout-pane-review {
+  // Edit buttons.
+  .checkout-pane__edit {
+    // Hide text so we can just display an icon.
+    font-size: 0;
+
+    a {
+      text-decoration: none;
+
+      // Gear/Cog icon.
+      &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-cog);
+        font-size: 26px;
+      }
+    }
+  }
+}
+
+// Checkout Complete.
+.checkout-complete__order-number {
+  font-weight: bold;
+}
+
+// Checkout Completion Registration.
+.checkout-pane-completion-register {
+  clear: both;
+  margin: 40px 0 0;
+  padding: 40px 0 0;
+  border-top: 1px solid $gray-border;
+
+  h2 {
+    margin-top: 0;
+    text-transform: capitalize;
+  }
+  .confirm-parent,
+  .password-parent {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}

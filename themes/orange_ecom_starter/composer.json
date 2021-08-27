@@ -1,0 +1,10 @@
+{
+  "name": "drupal/orange_ecom_starter",
+  "type": "drupal-theme",
+  "description": "A starting theme for Drupal E-Commerce projects.",
+  "homepage": "https://drupal.org/project/orange_ecom_starter",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/twig_tweak": "^2.6"
+  }
+}

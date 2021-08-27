@@ -1,0 +1,6 @@
+parid:
+path: /about/parid
+defaults:
+_controller: Drupal\parid\Controller\ParidController::paridhello
+requriements:
+_premission: "access content"

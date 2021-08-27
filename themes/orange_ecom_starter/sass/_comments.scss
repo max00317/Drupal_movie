@@ -1,0 +1,268 @@
+//
+// Comments.
+//
+
+.comment-form-wrapper {
+  clear: both;
+  margin: 30px 0;
+  padding: 20px;
+  background: #efefef;
+  border: 1px solid #dfdfdf;
+
+  @media (min-width: $screen-sm-min) {
+    padding: 40px;
+  }
+  // Comment message textarea.
+  .form-textarea-wrapper textarea {
+    width: 100%;
+  }
+}
+.field--name-comment-body {
+
+  // Hide text format markup.
+  .filter-wrapper {
+    display: none;
+  }
+}
+.comment {
+  position: relative;
+  clear: both;
+  margin: 0 0 30px;
+  padding: 0 0 30px 60px;
+  border-bottom: 1px solid #ccc;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+  // Comment bubble icon.
+  &::before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-comment);
+    @include fa-icon-flip(-1,1,0);
+    position: absolute;
+    top: -3px;
+    left: 0;
+    font-size: 43px;
+    line-height: 43px;
+    color: $c-accent-1;
+  }
+  ul.links {
+    clear: both;
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: right;
+
+    li {
+      position: relative;
+      display: inline-block;
+      margin: 0 0 0 10px;
+      padding: 0;
+      background: none;
+      vertical-align: top;
+
+      a {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+      }
+      &:first-child {
+        a {
+          padding-left: 30px;
+
+          // Reply icon.
+          &::before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-reply);
+            @include fa-icon-flip(-1,-1,0);
+            position: absolute;
+            top: -1px;
+            left: 0;
+            font-size: 21px;
+            line-height: 21px;
+            color: $c-accent-1;
+          }
+        }
+      }
+    }
+  }
+}
+.comment-wrapper {
+  > h2.title {
+    margin-bottom: 20px;
+  }
+  > .comment:first-child {
+    margin-top: 30px;
+  }
+}
+// Comment Reply.
+.indented {
+
+  .comment {
+    padding-left: 35px;
+
+    // Reply icon.
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-reply);
+      @include fa-icon-flip(-1,-1,0);
+      top: -1px;
+      font-size: 21px;
+      line-height: 21px;
+    }
+  }
+}
+.comment__date-created {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 12px;
+}
+.comment-form__title {
+  margin-top: 0;
+}
+.comment__author {
+  font-weight: bold;
+}
+
+// Star Rating.
+.star-rating {
+  font-size: 0;
+
+  .star {
+    position: relative;
+    display: inline-block;
+    margin: 0 2px 0 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background: none;
+    vertical-align: top;
+
+    // Icon.
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-star);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      color: $c-star-off;
+      text-indent: 0;
+      z-index: 0;
+    }
+    a {
+      position: relative;
+      background: none !important;
+      z-index: 1;
+    }
+    // Whole star.
+    &.on {
+      background: none;
+
+      // Icon.
+      &::before {
+        content: fa-content($fa-var-star);
+        color: $c-star-on;
+      }
+    }
+    // Half star.
+    &.half-on {
+      background: none;
+
+      // Icon.
+      &::before {
+        content: fa-content($fa-var-star-half-alt);
+        color: $c-star-on;
+      }
+    }
+    &.hover {
+      background: none;
+
+      // Icon.
+      &::before {
+        color: $c-star-hover;
+      }
+    }
+    // Empty star.
+    span.off {
+      background: none;
+
+      // Icon.
+      &::before {
+        content: fa-content($fa-var-star);
+        color: $c-star-off;
+      }
+    }
+  }
+}
+
+// Star Rating Field.
+.field--name-field-star-rating {
+  .form-type-radio {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+  }
+  // Clearfix.
+  .fieldset-wrapper::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  .form-radios {
+    float: left;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+  }
+  .form-radios > input {
+    display: none;
+  }
+  // Star icon.
+  .form-radios > label::before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-star);
+    font-size: 20px;
+  }
+  .form-radios > label {
+    float: right;
+    margin: 0 2px 0 0;
+    padding: 0;
+    font-size: 0;
+    color: $c-star-off;
+    cursor: pointer;
+  }
+  // Full star when clicked.
+  .form-radios > input:checked ~ label {
+    color: $c-star-on;
+    // Change icon to solid star.
+    &::before {
+      content: fa-content($fa-var-star);
+    }
+  }
+  // Hover for current star.
+  .form-radios:not(:checked) > label:hover,
+  // Hover for previous stars in list.
+  .form-radios:not(:checked) > label:hover ~ label,
+  // Hover for current star when changing rating.
+  .form-radios > input:checked + label:hover,
+  .form-radios > input:checked ~ label:hover,
+  // Lighten current selection.
+  .form-radios > label:hover ~ input:checked ~ label,
+  .form-radios > input:checked ~ label:hover ~ label {
+    color: $c-star-hover;
+    // Change icon to solid star.
+    &::before {
+      content: fa-content($fa-var-star);
+    }
+  }
+}
